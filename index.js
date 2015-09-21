@@ -1,6 +1,6 @@
 var fs     = require('fs');
 var requireDirectory = require('require-directory');
-var routes = requireDirectory(module, './routes');
+// var routes = requireDirectory(module, './routes');
 
 var stack = [];
 /**
@@ -18,28 +18,31 @@ var stack = [];
  * @api public
  */
 function mount(app) {
-  var r = arguments[1] || routes;
+  var r = arguments[1];
   var pre = arguments[2] || '';
+  
+  // console.log(r);
   
   for (var k in r) {
     var file = '/' + pre + '' + k + '.js';
-    // console.log('mount route ' + file + " ");
+    // console.log(r[k] + 'mount route ' + file + " ");
     var path = '';
     if(typeof r[k] == 'object') {
       // console.log('this is a obj');
       mount(app, r[k], pre + k + '/');
     }else if(k === 'index') {
       path = '/'+ pre;
-      // _use(app, file, path, r[k]);
+      _use(app, file, path, r[k]);
     }else {
       path = '/' + pre + '' + k;
-      // _use(app, file, path, r[k]);
+      _use(app, file, path, r[k]);
     }
   }
 }
 
 function _use(app, file, path, handler) {
-  console.dir(handler)
+  // console.log('path = ' + path)
+  // console.dir(handler)
   // console.log(handler.stack)
   app.use(path, handler);
   
@@ -79,12 +82,11 @@ function _dump(routes_folder_path) {
 
   // console.log(stack)
   console.log('\n******************************************************');
-  console.log('\t\tMoaJS Plugins Dump');
+  console.log('\t\tMoaJS Plugins Mount 【' + routes_folder_path + '】');
   console.log('******************************************************\n');
   
   for (var k in stack) {
     var obj = stack[k];
-    console.dir(k)
     // console.log(obj.file + obj.method + obj.path)
     table.push(
         [routes_folder_path + obj.file, obj.method, obj.path]
@@ -131,22 +133,25 @@ function mount_plugins (app, routes_folder_path, is_debug) {
       return;
     }
   
-    console.log(dir_path);
-    console.log(dir_name);
+    // console.log(dir_path);
+    // console.log(dir_name);
   
     var _path = dir_path + '/app/routes'
     if (fs.existsSync(_path)) {
-      console.log("  - " + _path);
+      // console.log("  - " + _path);
       
+      // console.log('mount plugins_folder_path = ' + _path)
+      var routes = requireDirectory(module, _path);
   
-      console.log('mount plugins_folder_path = ' + r)
-      routes = requireDirectory(module, r);
-  
-      // mount(app) ;
+      // console.log(routes);
+      mount(app, routes, dir_name+ '/') ;
   
       if(is_debug){
-        _dump (routes_folder_path);
+        _dump (dir_name);
       }    
+      // console.log('exist')
+    }else{
+      console.log('not exist')
     }
   
   });
