@@ -30,10 +30,10 @@ function mount(app) {
       mount(app, r[k], pre + k + '/');
     }else if(k === 'index') {
       path = '/'+ pre;
-      _use(app, file, path, r[k]);
+      // _use(app, file, path, r[k]);
     }else {
       path = '/' + pre + '' + k;
-      _use(app, file, path, r[k]);
+      // _use(app, file, path, r[k]);
     }
   }
 }
@@ -115,13 +115,41 @@ function mount_with_folder(app, routes_folder_path) {
   var is_debug  = arguments[2] || false;
   
   console.log('mount plugins_folder_path = ' + r)
-  routes = requireDirectory(module, r);
   
-  mount(app) ;
+  mount_plugins(app, r, is_debug);
+}
+
+var dirw = require('dirw');
+var fs   = require('fs');
+var path = 'plugins';
+
+function mount_plugins (app, routes_folder_path, is_debug) {
+  stack = [];// empty when enter
+
+  dirw.dir(routes_folder_path, function(dir_path, dir_name){
+    if(dir_name == 'bin' || dir_name == '.bin'){
+      return;
+    }
   
-  if(is_debug){
-    _dump (routes_folder_path);
-  }
+    console.log(dir_path);
+    console.log(dir_name);
+  
+    var _path = dir_path + '/app/routes'
+    if (fs.existsSync(_path)) {
+      console.log("  - " + _path);
+      
+  
+      console.log('mount plugins_folder_path = ' + r)
+      routes = requireDirectory(module, r);
+  
+      // mount(app) ;
+  
+      if(is_debug){
+        _dump (routes_folder_path);
+      }    
+    }
+  
+  });
 }
 
 module.exports = mount_with_folder;

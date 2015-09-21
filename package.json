@@ -28,6 +28,7 @@
   "dependencies": {
     "cli-table": "^0.3.1",
     "debug": "^2.2.0",
+    "dirw": "^1.0.3",
     "require-directory": "^2.1.1"
   },
   "devDependencies": {
