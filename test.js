@@ -8,7 +8,8 @@ var mount = require('./index');
 // mount(app);
 
 // with path
-mount(app, 'plugins', true);
+// mount(app, 'plugins', true);
+mount(app, 'plugins2', true);
 
 // start server
 app.listen(23018)
