@@ -1,0 +1,36 @@
+{
+  "name": "mount-plugins",
+  "version": "1.0.0",
+  "description": "mount-plugins = auto mount express plugins with plugins_folder_path",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm publish .",
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moajs/mount-plugins.git"
+  },
+  "keywords": [
+    "express",
+    "plugins",
+    "route",
+    "mount",
+    "require",
+    "directory"
+  ],
+  "author": "i5ting",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moajs/mount-plugins/issues"
+  },
+  "homepage": "https://github.com/moajs/mount-plugins#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "debug": "^2.2.0",
+    "require-directory": "^2.1.1"
+  },
+  "devDependencies": {
+    "express": "^4.12.4"
+  }
+}
