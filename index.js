@@ -110,23 +110,41 @@ function _dump(routes_folder_path) {
  * @return 
  * @api public
  */
-function mount_with_folder(app, routes_folder_path) {
-  stack = [];// empty when enter
-  
-  var r         = arguments[1] || './plugins';
-  var is_debug  = arguments[2] || false;
-  
-  console.log('mount plugins_folder_path = ' + r)
-  
-  mount_plugins(app, r, is_debug);
-}
 
 var dirw = require('dirw');
 var fs   = require('fs');
 var path = 'plugins';
 
-function mount_plugins (app, routes_folder_path, is_debug) {
+function mount_plugins () {
   stack = [];// empty when enter
+  var app, routes_folder_path, pre, is_debug;
+  
+  if(arguments.length > 0){
+    app = arguments[0];
+  }else{
+    console.log("Usages: mount_plugins(app, 'plugins2', 'app/routes', true);")
+  }
+  
+  is_debug = false;
+  routes_folder_path= "plugins"
+  pre = "app/routes"
+  
+  if (arguments.length >= 4) {
+    routes_folder_path = arguments[1];
+    pre = arguments[2];
+    is_debug = arguments[3];
+  }else if (arguments.length == 3){
+    routes_folder_path = arguments[1];
+    is_debug = arguments[2];
+  }else if (arguments.length == 2){
+    is_debug = arguments[1];
+  }
+  
+  if (is_debug) {
+    console.log('***dump**')
+    console.log('routes_folder_path = ' + routes_folder_path)
+    console.log('pre = ' + pre)
+  }
 
   dirw.dir(routes_folder_path, function(dir_path, dir_name){
     if(dir_name == 'bin' || dir_name == '.bin'){
@@ -136,7 +154,7 @@ function mount_plugins (app, routes_folder_path, is_debug) {
     // console.log(dir_path);
     // console.log(dir_name);
   
-    var _path = dir_path + '/app/routes'
+    var _path = dir_path + '/' + pre
     if (fs.existsSync(_path)) {
       // console.log("  - " + _path);
       
@@ -157,4 +175,4 @@ function mount_plugins (app, routes_folder_path, is_debug) {
   });
 }
 
-module.exports = mount_with_folder;
+module.exports = mount_plugins;

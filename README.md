@@ -25,7 +25,11 @@ var mount = require('mount-plugins');
 // mount(app, 'plugins');
 
 // with path & api dump
-mount(app, 'plugins2', true);
+// mount(app, 'plugins2', true);
+
+
+// with path & pre & api dump
+mount(app, 'plugins2','app/routes', true);
 
 // start server
 app.listen(23018)
