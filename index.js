@@ -79,7 +79,7 @@ function _dump(routes_folder_path) {
 
   // console.log(stack)
   console.log('\n******************************************************');
-  console.log('\t\tMoaJS Apis Dump');
+  console.log('\t\tMoaJS Plugins Dump');
   console.log('******************************************************\n');
   
   for (var k in stack) {
@@ -100,7 +100,7 @@ function _dump(routes_folder_path) {
  * Examples:
  *
  *     // mount routes in app.js
- *     mount(app, 'routes2', true);
+ *     mount(app, 'plugins2', true);
  *
  * @param {Object} app
  * @param {String} routes_folder_path
@@ -111,10 +111,10 @@ function _dump(routes_folder_path) {
 function mount_with_folder(app, routes_folder_path) {
   stack = [];// empty when enter
   
-  var r         = arguments[1] || './routes';
+  var r         = arguments[1] || './plugins';
   var is_debug  = arguments[2] || false;
   
-  console.log('mount routes_folder_path = ' + r)
+  console.log('mount plugins_folder_path = ' + r)
   routes = requireDirectory(module, r);
   
   mount(app) ;
