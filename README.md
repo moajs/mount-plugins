@@ -31,6 +31,8 @@ mount(app, 'plugins2', true);
 app.listen(23018)
 ```
 
+![](doc/1.png)
+
 ## Contributing
 
 1. Fork it
