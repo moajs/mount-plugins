@@ -37,6 +37,10 @@ app.listen(23018)
 
 ![](doc/1.png)
 
+## TODO
+
+- [ ] 增加生命周期
+
 ## Contributing
 
 1. Fork it
